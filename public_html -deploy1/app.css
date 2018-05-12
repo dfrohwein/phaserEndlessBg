@@ -1,0 +1,38 @@
+﻿body {
+    font-family: monospace;
+    background-color: #101012;
+    padding: 0;
+    text-align: center;
+}
+h1,h2,h3,h4,h5 {
+    color: #AFAFAF;
+}
+
+#content {
+    left: 50%;
+    margin-left: -400px;
+}
+
+#wrapper {
+    text-align: center;
+}
+
+/* unvisited link */
+a:link {
+    color: #AFAFAF
+}
+
+/* visited link */
+a:visited {
+    color: #AFAFAF;
+}
+
+/* mouse over link */
+a:hover {
+    color: #EEEEEE;
+}
+
+/* selected link */
+a:active {
+    color: #AEAEAE;
+}

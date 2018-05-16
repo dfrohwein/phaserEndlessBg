@@ -11,14 +11,14 @@ if (typeof codeArtStage === 'undefined') {
     codeArtStage.front = null;
     codeArtStage.scaleAll = 0.5; //general scale
     codeArtStage.baseSprite = null; //sprite
-    codeArtStage.width = 800; //canvas dimensions
+    codeArtStage.width = 500; //canvas dimensions
     codeArtStage.height = 300;
 
     //options
     codeArtStage.mouseOn = true;
     codeArtStage.mouseDistToMid = 0;
     codeArtStage.mouseAdjustTween = null;
-    
+
     codeArtStage.paralaxxer = null;
 
     //tria sprites
@@ -112,6 +112,8 @@ if (typeof codeArtStage === 'undefined') {
             codeArtStage.game.load.image('rain', 'images/rain.png');
             codeArtStage.game.load.image('lowerShine', 'images/lowershineColor.png');
             codeArtStage.game.load.image('paper', 'images/paper.png');
+            codeArtStage.game.load.image('arcs1', 'images/arcades1seamless2small.png');
+            codeArtStage.game.load.image('arcs2', 'images/arcades1seamlessSmall.png');
 
             codeArtStage.game.load.audio('start', 'sounds/startoutAlltogethertrainmumble.mp3');
 
@@ -228,9 +230,56 @@ if (typeof codeArtStage === 'undefined') {
             initWhirl(codeArtStage.game);
             whirl.onCreate();
 
+            codeArtStage.paralaxxer = new paralaxxer(codeArtStage.game);
+            //codeArtStage.paralaxxer.newPanorama(['re','bl','gr'],[0,0.38,0.62],0.7);
+            //codeArtStage.paralaxxer.newSpriteLine('bl',0, 1);
+            //codeArtStage.paralaxxer.newSpriteLine('arcs2',0.38, 2);
+            //codeArtStage.paralaxxer.newSpriteLine('arcs1',0.62, 4);
+            var paralaxbg1 = codeArtStage.paralaxxer.newPaintable(0.2);
+
+            for (var i = 0; i < 30; i++) {
+                var xTo = Math.random() * codeArtStage.game.world.width * 2;
+                var yTo = Math.random() * codeArtStage.game.world.height;
+                //backgroundBase.draw('re', Math.random() * codeArtStage.game.world.width, Math.random() * codeArtStage.game.world.height);
+                codeArtStage.paralaxxer.paintSeamlessWidthAtXY('re', xTo, yTo, paralaxbg1.bg);
+            }
+
+            var paralaxbg2 = codeArtStage.paralaxxer.newPaintable(0.4);
+
+            for (var i = 0; i < 30; i++) {
+                var xTo = Math.random() * codeArtStage.game.world.width * 2;
+                var yTo = Math.random() * codeArtStage.game.world.height + 70;
+                //backgroundBase.draw('re', Math.random() * codeArtStage.game.world.width, Math.random() * codeArtStage.game.world.height);
+                codeArtStage.paralaxxer.paintSeamlessWidthAtXY('bl', xTo, yTo, paralaxbg2.bg);
+            }
+
+            var paralaxbg3 = codeArtStage.paralaxxer.newPaintable(0.7);
+
+            for (var i = 0; i < 30; i++) {
+                var xTo = Math.random() * codeArtStage.game.world.width * 2;
+                var yTo = Math.random() * codeArtStage.game.world.height + 90;
+                //backgroundBase.draw('re', Math.random() * codeArtStage.game.world.width, Math.random() * codeArtStage.game.world.height);
+                codeArtStage.paralaxxer.paintSeamlessWidthAtXY('ge', xTo, yTo, paralaxbg3.bg);
+            }
+
+            var paralaxbg4 = codeArtStage.paralaxxer.newPaintable(1);
+
+            for (var i = 0; i < 30; i++) {
+                var xTo = Math.random() * codeArtStage.game.world.width * 2;
+                var yTo = Math.random() * codeArtStage.game.world.height + 170;
+                //backgroundBase.draw('re', Math.random() * codeArtStage.game.world.width, Math.random() * codeArtStage.game.world.height);
+                codeArtStage.paralaxxer.paintSeamlessWidthAtXY('gr', xTo, yTo, paralaxbg4.bg);
+            }
+
             codeArtStage.initBirds();
+
+            var drawBirds = function() {
+                console.log(paralaxbg4.sprite.x);
+                codeArtStage.paralaxxer.paintSeamlessSpriteChildrenAutoMoved(codeArtStage.birds, paralaxbg4.bg, paralaxbg4.sprite);
+            };
             
-            codeArtStage.paralaxxer = new paralaxxer(codeArtStage.game,['re','bl','gr'],1.2);
+            var key1 = codeArtStage.game.input.keyboard.addKey(Phaser.Keyboard.ONE);
+            key1.onDown.add(drawBirds, this);
 
             if (codeArtStage.mouseOn) {
                 codeArtStage.game.input.addMoveCallback(function (pointer, x, y) {
